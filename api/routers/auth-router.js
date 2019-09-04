@@ -32,20 +32,21 @@ const sessionOptions = {
 }
 
 // Cors whitelist 👻 (Use this after deployment for security)
-// const whitelist = ['http://localhost:3000']
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true)
-//     } else {
-//       callback(new Error('Not allowed by CORS'))
-//     }
-//   }
-// }
-// router.use(cors(corsOptions))
+const whitelist = ['http://localhost:3000']
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+router.use(cors(corsOptions))
 
 // Enable middleware 🐎
-router.use(cors()) // Disable this line once you turn on whitelist
+// router.use(cors()) 
+// Disable this line once you turn on whitelist
 router.use(session(sessionOptions))
 
 // Set up endpoints 💀
