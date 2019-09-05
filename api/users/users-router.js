@@ -1,7 +1,7 @@
 // Enable tools 🔨
 const router = require('express').Router()
-const Users = require('../helpers/helper-model.js')
-const restricted = require('../helpers/restricted-middleware.js')
+const Users = require('./helper-model.js/index.js')
+const restricted = require('../auth/restricted-middleware.js')
 
 // Set up endpoints 💀
 router.get('/', restricted, async (req, res) => {

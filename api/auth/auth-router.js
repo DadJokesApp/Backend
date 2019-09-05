@@ -2,7 +2,7 @@
 const router = require('express').Router()
 const session = require('express-session')
 const knexSessionStore = require('connect-session-knex')(session)
-const Users = require('../helpers/helper-model.js')
+const Users = require('../users/helper-model.js/index.js')
 
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
