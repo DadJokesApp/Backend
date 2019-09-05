@@ -1,10 +1,14 @@
 const db = require('../../data/db-config.js');
 
 module.exports = {
-    all
+  all,
+  public
 }
 
 function all() {
-    return db('jokes');
+  return db('jokes');
 };
 
+async function public() {
+  return await db('jokes').where({private: false});
+}
