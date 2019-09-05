@@ -3,8 +3,9 @@ const router = express.Router();
 const Jokes = require('../jokes/jokes-model.js');
 const restricted = require('../../auth/restricted-middleware.js');
 
+
 // GET /api/jokes/
-router.get('/', restricted, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const jokes = await Jokes.all();
 
@@ -19,18 +20,18 @@ router.get('/', restricted, async (req, res) => {
 });
 
 // GET /api/jokes/public
-router.get('/public', async (req, res) => {
-  try {
-    const publicJokes = await Jokes.public();
-
-    if (publicJokes) {
-      res.status(200).json(jokes);
-    } else {
-      res.status(400).json({message: "No jokes found"});
-    }
-  } catch (err) {
-  }
-})
+// router.get('/public', async (req, res) => {
+//   try {
+//     const publicJokes = await Jokes.public();
+// 
+//     if (publicJokes) {
+//       res.status(200).json(jokes);
+//     } else {
+//       res.status(400).json({message: "No jokes found"});
+//     }
+//   } catch (err) {
+//   }
+// })
 
 // GET /api/jokes/id/private/
 
