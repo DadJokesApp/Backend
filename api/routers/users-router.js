@@ -1,59 +1,73 @@
-const jwt = require('jsonwebtoken');
-const express = require('express');
-const router = express.Router();
-const Users = require('../users/users-model.js');
-const secrets = require('../../config/secrets.js');
+// Enable tools 🔨
+const router = require('express').Router()
+const Users = require('../helpers/helper-model.js')
+const restricted = require('../helpers/restricted-middleware-users.js')
 
-// POST /api/users/register
-router.post('/register', async (req, res) => {
-  let user = req.body;
-
+// Set up endpoints 💀
+router.get('/', restricted, async (req, res) => {
   try {
-    if (user) {
-      const newUser = await Users.add(user);
-      res.status(201).json(newUser);
+    const users = await Users.find()
+    if (users) {
+      res.status(200).json(users)
     } else {
-      res.status(400).json({message: "Need credentials"});
+      res.status(404).json({ message: 'Could not find users 🤷‍' })
+    }
+  } catch (e) {
+    res.status(500).json({ message: 'Failed to get users ☠️' })
+  }
+})
+
+router.get('/:id', restricted, async (req, res) => {
+  const { id } = req.params
+  try {
+    const user = await Users.findById(id)
+    if (user) {
+      res.json(user)
+    } else {
+      res.status(404).json({
+        message: 'Could not find user with given id 🤷‍'
+      })
     }
   } catch (err) {
-    console.log(err);
-    res.status(500).json({message: "Error saving user"});
+    res.status(500).json({
+      message: 'Failed to get schemes ☠️'
+    })
   }
-});
+})
 
-// POST /api/users/login
-router.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-
+router.put('/:id', async (req, res) => {
+  const { id } = req.params
+  const changes = req.body
   try {
-    const user = await Users.findBy({username});
-
+    const user = await Users.findById(id)
     if (user) {
-      const token = generateToken(user);
-      res.status(200).json(token);
+      const updatedUser = await Users.update(changes, id)
+      res.json(updatedUser)
     } else {
-      res.status(401).json({ message: 'Invalid Credentials' });
+      res.status(404).json({
+        message: 'Could not find user with given id 🤷‍'
+      })
     }
   } catch (err) {
-    console.log(err);
-    res.status(500).json({message: "Error"});
+    res.status(500).json({ message: 'Failed to update user ☠️' })
   }
-});
+})
 
-function generateToken(user) {
-  const payload = {
-    subject: "user",
-    username: user.username
-  };
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params
+  try {
+    const deleted = await Users.remove(id)
+    if (deleted) {
+      res.json({ removed: deleted })
+    } else {
+      res.status(404).json({
+        message: 'Could not find the user with given id 🤷‍'
+      })
+    }
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to delete user ☠️' })
+  }
+})
 
-  const secret = process.env.JWT_SECRET;
-
-  const options = {
-    expiresIn: '1h'
-  };
-
-  return jwt.sign(payload, secret, options);
-}
-
-
-module.exports = router;
+// Export router 🚀
+module.exports = router

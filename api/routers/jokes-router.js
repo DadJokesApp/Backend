@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Jokes = require('../jokes/jokes-model.js');
-const restricted = require('../../auth/restricted-middleware.js');
+const restricted = require('../helpers/restricted-middleware-jokes.js');
 
 
 // GET /api/jokes/

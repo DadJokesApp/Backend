@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # .gitignore
 
 # Logs
@@ -81,3 +82,10 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+=======
+# Dependency directories
+node_modules/
+
+# dotenv environment variables file
+.env
+>>>>>>> 2901c76431f5df3cffc8ec04c22fbecfcf8ba752
