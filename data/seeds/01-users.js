@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-exports.seed = function(knex) {
-  return knex('users').truncate()
-    .then(function () {
-=======
 // Enable bcryptjs and .env 💬
 require('dotenv').config()
 const bcrypt = require('bcryptjs')
@@ -12,18 +7,10 @@ exports.seed = function(knex) {
   return knex('users').truncate()
     .then(function () {
       // Inserts seed entries 🌱
->>>>>>> 2901c76431f5df3cffc8ec04c22fbecfcf8ba752
       return knex('users').insert([
         { id: 1,
           username: 'FireNinja',
           email: 'mcbride967@gmail.com',
-<<<<<<< HEAD
-          password: 'secret'}
-      ])
-    })
-}
-
-=======
           img_url: 'http://files.gamebanana.com/img/ico/sprays/narutospray.png',
           password: bcrypt.hashSync(process.env.PASSWORD, 10)},
         {
@@ -64,4 +51,3 @@ exports.seed = function(knex) {
       ])
     })
 }
->>>>>>> 2901c76431f5df3cffc8ec04c22fbecfcf8ba752
