@@ -1,7 +1,6 @@
 // Enable bcryptjs and .env 💬
 require('dotenv').config()
 const bcrypt = require('bcryptjs')
-
 // Plant seeds 🏡
 exports.seed = function(knex) {
   return knex('users').truncate()
