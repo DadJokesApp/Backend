@@ -3,7 +3,8 @@ const db = require('../../data/dbConfig.js');
 module.exports = {
   all,
   public,
-  create
+  create,
+  remove
 }
 
 function all() {
@@ -16,4 +17,8 @@ async function public() {
 
 function create(joke) {
   return db('jokes').insert(joke);
+}
+
+function remove(id) {
+  return db('jokes').where({ id: id }).del();
 }

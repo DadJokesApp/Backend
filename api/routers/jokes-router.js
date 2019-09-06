@@ -57,6 +57,23 @@ router.post('/', restricted, async (req, res) => {
   }
 });
 
+// DELETE /api/jokes/1
+router.delete('/:id', restricted, async (req, res) => {
+  const { id } = req.params;
+  console.log('id:', id);
+
+  try {
+    const deleted = await Jokes.remove(id)
+    if (deleted) {
+      res.status(200).json(deleted);
+    } else {
+      res.status(404).json({message: 'Not found'});
+    }
+  } catch (err) {
+    res.status(500).json({message: 'Error deleting a joke'});
+  }
+})
+
 
 module.exports = router;
 
