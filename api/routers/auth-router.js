@@ -32,19 +32,19 @@ const sessionOptions = {
 }
 
 // Cors whitelist 👻
-const whitelist = ['http://localhost:3000', 'https://epic-babbage-f8d77f.netlify.com']
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
-}
+// const whitelist = ['http://localhost:3000', 'https://epic-babbage-f8d77f.netlify.com']
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   }
+// }
 
 // Enable middleware 🐎
-router.use(cors(corsOptions))
+router.use(cors()) // corsOptions
 router.use(session(sessionOptions))
 
 // Set up endpoints 💀
@@ -64,7 +64,7 @@ router.post('/register', (req, res) => {
 
 router.post('/login', validate, (req, res) => {
   let { username, password } = req.headers
-
+  console.log(req.session)
   req.session.loggedin = false
 
   Users.findBy({ username })
@@ -72,6 +72,7 @@ router.post('/login', validate, (req, res) => {
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
         req.session.loggedin = true
+        console.log(req.session)
         const token = genToken(user)
         res.status(200).json({
           message: `Welcome ${user.username}! 🔥`,
@@ -112,7 +113,9 @@ router.delete('/logout', (req, res) => {
 function genToken(user) {
   const payload = {
     subject: 'user',
-    username: user.username
+    username: user.username,
+    email: user.email,
+    img_url: user.img_url
   }
 
   const secret = process.env.SECRET

@@ -13,6 +13,10 @@ exports.up = function(knex) {
       .unique()
 
     users
+      .string('img_url', 128)
+      .unique()
+      
+    users
       .string('password', 128)
       .notNullable()
   })
