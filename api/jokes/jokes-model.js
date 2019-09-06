@@ -3,7 +3,7 @@ const db = require('../../data/dbConfig.js');
 module.exports = {
   all,
   public,
-  add
+  create
 }
 
 function all() {
@@ -14,6 +14,6 @@ async function public() {
   return await db('jokes').where({private: false});
 }
 
-function add(joke) {
+function create(joke) {
   return db('jokes').insert(joke);
 }

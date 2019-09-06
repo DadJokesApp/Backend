@@ -46,7 +46,7 @@ router.post('/', restricted, async (req, res) => {
       const [ user ] = await Users.findBy({username});
       joke.user_id = user.id;
 
-      const [ jokeId ] = await Jokes.add(joke);
+      const [ jokeId ] = await Jokes.create(joke);
       res.status(201).json(jokeId);
     } else {
       res.status(400).json({message: 'Joke required'});
