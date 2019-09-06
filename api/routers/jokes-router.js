@@ -74,6 +74,25 @@ router.delete('/:id', restricted, async (req, res) => {
   }
 })
 
+// PUT /api/jokes/1
+router.put('/:id', async (req, res) => {
+  const { id } = req.params;
+  const jokeChanges = req.body;
+
+  try {
+    const joke = await Jokes.find(id);
+
+    if (joke) {
+      const updatedJoke = await Jokes.update(jokeChanges, id);
+      res.status(200).json(updatedJoke);
+    } else {
+      res.status(404).json({message: 'Joke not found'});
+    }
+  } catch (err) {
+    res.status(404).json({message: 'Error updating joke'});
+  }
+});
+
 
 module.exports = router;
 

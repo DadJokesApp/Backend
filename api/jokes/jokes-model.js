@@ -4,7 +4,9 @@ module.exports = {
   all,
   public,
   create,
-  remove
+  remove,
+  update,
+  find
 }
 
 function all() {
@@ -21,4 +23,13 @@ function create(joke) {
 
 function remove(id) {
   return db('jokes').where({ id: id }).del();
+}
+
+async function update(joke, id) {
+  await db('jokes').where({ id }).update(joke);
+  return find(id);
+}
+
+function find(id) {
+  return db('jokes').where({ id }).first();
 }
