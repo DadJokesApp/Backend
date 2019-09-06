@@ -50,3 +50,4 @@ exports.seed = function(knex) {
       ])
     })
 }
+
