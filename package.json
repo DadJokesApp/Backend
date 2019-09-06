@@ -12,10 +12,6 @@
     "type": "git",
     "url": "git+https://github.com/DadJokesApp/Backend.git"
   },
-<<<<<<< HEAD
-  "keywords": [],
-  "author": "",
-=======
   "keywords": [
     "dad",
     "joke",
@@ -34,21 +30,12 @@
     "web"
   ],
   "author": "FireNinja",
->>>>>>> 2901c76431f5df3cffc8ec04c22fbecfcf8ba752
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/DadJokesApp/Backend/issues"
   },
   "homepage": "https://github.com/DadJokesApp/Backend#readme",
   "dependencies": {
-<<<<<<< HEAD
-    "dotenv": "^8.1.0",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "knex": "^0.19.3",
-    "nodemon": "^1.19.2",
-    "sqlite3": "^4.1.0"
-=======
     "bcrypt": "^3.0.6",
     "bcryptjs": "^2.4.3",
     "connect-session-knex": "^1.4.0",
@@ -64,6 +51,5 @@
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
->>>>>>> 2901c76431f5df3cffc8ec04c22fbecfcf8ba752
   }
 }
