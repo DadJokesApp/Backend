@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Jokes = require('../jokes/jokes-model.js');
+const Users = require('../helpers/helper-model.js')
 const restricted = require('../helpers/restricted-middleware-jokes.js');
 
 
@@ -34,6 +35,27 @@ router.get('/public', async (req, res) => {
   } catch (err) {
   }
 })
+
+// POST /api/jokes/
+router.post('/', restricted, async (req, res) => {
+  const joke = req.body;
+
+  try {
+    if (joke) {
+      const username = req.decodedJwt.username;
+      const [ user ] = await Users.findBy({username});
+      joke.user_id = user.id;
+
+      const [ jokeId ] = await Jokes.add(joke);
+      res.status(201).json(jokeId);
+    } else {
+      res.status(400).json({message: 'Joke required'});
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({message: 'Error adding joke'});
+  }
+});
 
 
 module.exports = router;
