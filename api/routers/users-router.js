@@ -46,7 +46,7 @@ function generateToken(user) {
     username: user.username
   };
 
-  const secret = secrets.jwtSecret;
+  const secret = process.env.JWT_SECRET;
 
   const options = {
     expiresIn: '1h'
