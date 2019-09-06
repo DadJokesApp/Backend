@@ -4,6 +4,7 @@ const express = require('express')
 // Set up routes 🏇
 const authRouter = require('./routers/auth-router.js')
 const usersRouter = require('./routers/users-router.js')
+const jokesRouter = require('./routers/jokes-router.js')
 
 // Set up middleware 🔗
 const helmet = require('helmet')
@@ -17,6 +18,7 @@ server.use(morgan('dev'))
 server.use(express.json())
 server.use('/api/auth', authRouter)
 server.use('/api/users', usersRouter)
+server.use('/api/jokes', jokesRouter)
 server.use(helmet())
 
 // Root GET 🌳

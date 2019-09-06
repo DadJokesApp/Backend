@@ -5,7 +5,7 @@ const server = require('./api/server')
 require('dotenv').config()
 
 // Made port dynamic for deployment 🚀
-const port = process.env.PORT
+const port = process.env.PORT || 4000
 
 // Let dev know server is listening 👂
 server.listen(port, () => {
