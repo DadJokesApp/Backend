@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-const express = require('express');
-const server = express();
-
-const jokesRouter = require('./routers/jokes-router.js');
-const usersRouter = require('./routers/users-router.js');
-
-server.use(express.json());
-server.use('/api/jokes', jokesRouter);
-server.use('/api/users', usersRouter);
-
-module.exports = server;
-=======
 // Set up express 🚀
 const express = require('express')
 
@@ -39,4 +26,3 @@ server.get('/', (req, res) => {
 
 // Export server 🚀
 module.exports = server
->>>>>>> 2901c76431f5df3cffc8ec04c22fbecfcf8ba752
