@@ -113,7 +113,10 @@ router.delete('/logout', (req, res) => {
 function genToken(user) {
   const payload = {
     subject: 'user',
-    username: user.username
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    img_url: user.img_url,
   }
 
   const secret = process.env.SECRET

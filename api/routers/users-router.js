@@ -1,10 +1,13 @@
 // Enable tools 🔨
 const router = require('express').Router()
 const Users = require('../helpers/helper-model.js')
-const restricted = require('../helpers/restricted-middleware-users.js')
+const cors = require('cors')
+// const restricted = require('../helpers/restricted-middleware-users.js')
+
+router.use(cors())
 
 // Set up endpoints 💀
-router.get('/', restricted, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const users = await Users.find()
     if (users) {
@@ -17,7 +20,7 @@ router.get('/', restricted, async (req, res) => {
   }
 })
 
-router.get('/:id', restricted, async (req, res) => {
+router.get('/:id', async (req, res) => {
   const { id } = req.params
   try {
     const user = await Users.findById(id)
@@ -40,6 +43,7 @@ router.put('/:id', async (req, res) => {
   const changes = req.body
   try {
     const user = await Users.findById(id)
+    console.log(user)
     if (user) {
       const updatedUser = await Users.update(changes, id)
       res.json(updatedUser)

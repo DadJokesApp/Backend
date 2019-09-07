@@ -20,6 +20,11 @@ server.use('/api/auth', authRouter)
 server.use('/api/users', usersRouter)
 server.use('/api/jokes', jokesRouter)
 server.use(helmet())
+server.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+  next()
+})
 
 // Root GET 🌳
 server.get('/', (req, res) => {
