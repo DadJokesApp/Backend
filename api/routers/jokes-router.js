@@ -2,13 +2,15 @@ const express = require('express');
 const router = express.Router();
 const Jokes = require('../jokes/jokes-model.js');
 const restricted = require('../helpers/restricted-middleware-jokes.js');
+const jwt = require('jsonwebtoken')
+const cors = require('cors')
 
+router.use(cors())
 
 // GET /api/jokes/
-router.get('/', restricted, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const jokes = await Jokes.all();
-
     if (jokes) {
       res.status(200).json(jokes);
     } else {
@@ -34,6 +36,25 @@ router.get('/public', async (req, res) => {
   } catch (err) {
   }
 })
+
+// Generate a JSON web token 🌹
+function genToken(user) {
+  const payload = {
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    img_url: user.img_url,
+    password: user.password
+  }
+
+  const secret = process.env.SECRET
+
+  const options = {
+    expiresIn: '1h'
+  }
+
+  return jwt.sign(payload, secret, options)
+}
 
 
 module.exports = router;

@@ -1,16 +1,16 @@
-const db = require('../../data/db-config.js');
+// const db = require('../../data/db-config.js');
 
-module.exports = {
-  add,
-  findBy
-}
+// module.exports = {
+//   add,
+//   findBy
+// }
 
-async function add(user) {
-  const newUserId = await db('users').insert(user);
-  return newUserId;
-};
+// async function add(user) {
+//   const newUserId = await db('users').insert(user);
+//   return newUserId;
+// };
 
 
-function findBy(filter) {
-    return db('users').where(filter);
-}
+// function findBy(filter) {
+//     return db('users').where(filter);
+// }

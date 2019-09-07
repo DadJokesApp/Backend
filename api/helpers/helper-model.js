@@ -40,6 +40,12 @@ async function update(changes, id) {
   return findById(id)
 }
 
+// function update(changes, id) {
+//   return db('users')
+//     .where({ id })
+//     .update(changes)
+// }
+
 function remove(id) {
   // returns removed count
   return db('users')
