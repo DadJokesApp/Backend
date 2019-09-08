@@ -7,11 +7,13 @@ module.exports = {
   find,
   findBy,
   findById,
+  update,
+  remove
 }
 
 // Functions ⚙️
 function find() {
-  return db('users').select('id', 'username', 'email', 'password')
+  return db('users').select('id', 'username', 'email', 'img_url', 'password')
 }
 
 function findBy(filter) {
@@ -28,4 +30,25 @@ function findById(id) {
   return db('users')
     .where({ id })
     .first()
+}
+
+async function update(changes, id) {
+  await db('users')
+    .where({ id })
+    .update(changes)
+
+  return findById(id)
+}
+
+// function update(changes, id) {
+//   return db('users')
+//     .where({ id })
+//     .update(changes)
+// }
+
+function remove(id) {
+  // returns removed count
+  return db('users')
+    .where({ id })
+    .del()
 }

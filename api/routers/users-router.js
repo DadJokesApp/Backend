@@ -1,10 +1,14 @@
 // Enable tools 🔨
 const router = require('express').Router()
 const Users = require('../helpers/helper-model.js')
-const restricted = require('../helpers/restricted-middleware-users.js')
+const cors = require('cors')
+const jwt = require('jsonwebtoken')
+// const restricted = require('../helpers/restricted-middleware-users.js')
+
+router.use(cors())
 
 // Set up endpoints 💀
-router.get('/', restricted, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const users = await Users.find()
     if (users) {
@@ -17,7 +21,7 @@ router.get('/', restricted, async (req, res) => {
   }
 })
 
-router.get('/:id', restricted, async (req, res) => {
+router.get('/:id', async (req, res) => {
   const { id } = req.params
   try {
     const user = await Users.findById(id)
@@ -37,18 +41,30 @@ router.get('/:id', restricted, async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   const { id } = req.params
-  const changes = req.body
+  const changes = {
+    id: req.body.id,
+    username: req.body.username,
+    email: req.body.email,
+    img_url: req.body.img_url,
+    password: req.body.password,
+
+  }
+  const token = genToken(changes)
   try {
     const user = await Users.findById(id)
+    console.log(`changes: ${changes}`)
+    console.log(`Token: ${req.params.token}`)
+    console.log(`id: ${id}`)
     if (user) {
       const updatedUser = await Users.update(changes, id)
-      res.json(updatedUser)
+      res.status(200).json({ updatedUser, token })
     } else {
       res.status(404).json({
         message: 'Could not find user with given id 🤷‍'
       })
     }
   } catch (err) {
+    console.log(err)
     res.status(500).json({ message: 'Failed to update user ☠️' })
   }
 })
@@ -68,6 +84,25 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json({ message: 'Failed to delete user ☠️' })
   }
 })
+
+// Generate a JSON web token 🌹
+function genToken(user) {
+  const payload = {
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    img_url: user.img_url,
+    password: user.password
+  }
+
+  const secret = process.env.SECRET
+
+  const options = {
+    expiresIn: '1h'
+  }
+
+  return jwt.sign(payload, secret, options)
+}
 
 // Export router 🚀
 module.exports = router

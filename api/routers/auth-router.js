@@ -112,8 +112,11 @@ router.delete('/logout', (req, res) => {
 // Generate a JSON web token 🌹
 function genToken(user) {
   const payload = {
-    subject: 'user',
-    username: user.username
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    img_url: user.img_url,
+    password: user.password
   }
 
   const secret = process.env.SECRET
