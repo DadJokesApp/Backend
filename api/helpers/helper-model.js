@@ -7,6 +7,7 @@ module.exports = {
   find,
   findBy,
   findById,
+  jokes
 }
 
 // Functions ⚙️
@@ -29,3 +30,12 @@ function findById(id) {
     .where({ id })
     .first()
 }
+
+// select * from users join jokes on (users.id = jokes.user_id) where users.id = 1;
+function jokes(id) {
+  return db('users as u')
+    .join('jokes as j', 'j.user_id', 'u.id')
+    .where('u.id', id)
+    .select('j.user_id', 'j.joke', 'j.punchline', 'j.private')
+}
+

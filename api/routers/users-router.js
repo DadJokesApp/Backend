@@ -69,5 +69,22 @@ router.delete('/:id', async (req, res) => {
   }
 })
 
+// GET /api/users/1/jokes
+router.get('/:id/jokes', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const jokes = await Users.jokes(id);
+
+    if (jokes && jokes.length > 0) {
+      res.status(200).json(jokes);
+    } else {
+      res.status(404).json({message: "No jokes found for this user."})
+    }
+  } catch (err) {
+    res.status(500).json({message: "Error finding jokes for user.", error: err})
+  }
+})
+
 // Export router 🚀
 module.exports = router
