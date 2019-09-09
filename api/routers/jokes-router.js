@@ -52,7 +52,6 @@ router.post('/', restricted, async (req, res) => {
       res.status(400).json({message: 'Joke required'});
     }
   } catch (err) {
-    console.log(err);
     res.status(500).json({message: 'Error adding joke'});
   }
 });
@@ -60,7 +59,6 @@ router.post('/', restricted, async (req, res) => {
 // DELETE /api/jokes/1
 router.delete('/:id', restricted, async (req, res) => {
   const { id } = req.params;
-  console.log('id:', id);
 
   try {
     const deleted = await Jokes.remove(id)
@@ -94,6 +92,4 @@ router.put('/:id', restricted, async (req, res) => {
 });
 
 
-
 module.exports = router;
-
