@@ -5,7 +5,6 @@ const db = require('../../data/dbConfig.js')
 module.exports = {
   add,
   find,
-  findBy,
   findById,
   update,
   remove
@@ -13,21 +12,28 @@ module.exports = {
 
 // Functions ⚙️
 function find() {
-  return db('users').select('id', 'username', 'email', 'img_url', 'password')
+  return db('comments as c')
+    .join('users as u', 'c.user_id', 'u.id')
+    // .join('jokes as j', 'c.joke_id', 'j.id')
+    .select('c.id', 'c.joke_id', 'c.user_id', 'u.username', 'u.img_url', 'c.comment',)
 }
 
-function findBy(filter) {
-  return db('users').where(filter)
+function findComments(joke_id) {
+  return db('jokes as j')
+    .join('users as u', 'j.user_id', 'u.id')
+    .select('j.id', 'u.username', 'u.img_url', 'j.joke', 'j.punchline')
+    .where({ joke_id })
+
 }
 
-async function add(user) {
-  const [id] = await db('users').insert(user)
+async function add(comment) {
+  const [id] = await db('comments').insert(comment)
 
   return findById(id)
 }
 
 function findById(id) {
-  return db('users')
+  return db('comments')
     .where({ id })
     .first()
 }
@@ -39,12 +45,6 @@ async function update(changes, id) {
 
   return findById(id)
 }
-
-// function update(changes, id) {
-//   return db('users')
-//     .where({ id })
-//     .update(changes)
-// }
 
 function remove(id) {
   // returns removed count

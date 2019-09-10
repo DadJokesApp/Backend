@@ -5,6 +5,7 @@ const express = require('express')
 const authRouter = require('./routers/auth-router.js')
 const usersRouter = require('./routers/users-router.js')
 const jokesRouter = require('./routers/jokes-router.js')
+const commentsRouter = require('./routers/comments-router.js')
 
 // Set up middleware 🔗
 const helmet = require('helmet')
@@ -19,12 +20,8 @@ server.use(express.json())
 server.use('/api/auth', authRouter)
 server.use('/api/users', usersRouter)
 server.use('/api/jokes', jokesRouter)
+server.use('/api/comments', commentsRouter)
 server.use(helmet())
-// server.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*")
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-//   next()
-// })
 
 // Root GET 🌳
 server.get('/', (req, res) => {

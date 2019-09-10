@@ -1,9 +1,9 @@
 // Enable tools 🔨
 const router = require('express').Router()
-const Users = require('../helpers/helper-model.js')
+const Users = require('../helpers/users-model.js')
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
-// const restricted = require('../helpers/restricted-middleware-users.js')
+// const restricted = require('../restrictedMiddleware/users.js')
 
 router.use(cors())
 
@@ -39,6 +39,38 @@ router.get('/:id', async (req, res) => {
   }
 })
 
+router.get('/:id/jokes', async (req, res) => {
+  const { id } = req.params
+  try {
+    const jokes = await Users.findJokes(id)
+
+    if (jokes.length) {
+      res.json(jokes)
+    } else {
+      res.status(404).json({ message: 'Could not find jokes for given scheme' })
+    }
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to get jokes' })
+  }
+})
+
+router.get('/:id/jokes/:id', async (req, res) => {
+  const { id } = req.params
+  console.log(req.params)
+  try {
+    const jokes = await Jokes.findById(id)
+    // const jokes = await Users.findJokes(id)
+
+    if (jokes.length) {
+      res.json(jokes)
+    } else {
+      res.status(404).json({ message: 'Could not find jokes with given id' })
+    }
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to get jokes' })
+  }
+})
+
 router.put('/:id', async (req, res) => {
   const { id } = req.params
   const changes = {
@@ -60,7 +92,7 @@ router.put('/:id', async (req, res) => {
       res.status(200).json({ updatedUser, token })
     } else {
       res.status(404).json({
-        message: 'Could not find user with given id 🤷‍'
+        message: 'Could not find user with given id 🤷'
       })
     }
   } catch (err) {
