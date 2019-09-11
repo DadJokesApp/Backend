@@ -7,7 +7,8 @@ module.exports = {
   create,
   remove,
   update,
-  find
+  find, 
+  findComments
 }
 
 function all() {
@@ -15,6 +16,14 @@ function all() {
     .join('users as u', 'j.user_id', 'u.id')
     .select('j.id', 'u.username', 'u.img_url', 
     'j.joke', 'j.punchline', 'j.private', 'j.user_id')
+}
+
+function findComments(joke_id) {
+  return db('comments as c')
+    .join('jokes as j', 'c.joke_id', 'j.id')
+    .join('users as u', 'c.user_id', 'u.id')
+    .select('c.id', 'c.joke_id', 'u.username', 'u.img_url', 'c.comment')
+    .where({ joke_id })
 }
 
 function findById(id) {

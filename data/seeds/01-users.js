@@ -11,7 +11,8 @@ exports.seed = function(knex) {
           username: 'FireNinja',
           email: 'mcbride967@gmail.com',
           img_url: 'http://files.gamebanana.com/img/ico/sprays/narutospray.png',
-          password: bcrypt.hashSync(process.env.PASSWORD, 10)},
+          password: bcrypt.hashSync(process.env.PASSWORD, 10)
+        },
         {
           id: 2,
           username: 'Rick Sanchez',
@@ -50,4 +51,3 @@ exports.seed = function(knex) {
       ])
     })
 }
-

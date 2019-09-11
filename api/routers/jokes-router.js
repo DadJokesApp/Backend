@@ -39,6 +39,23 @@ router.get('/public', async (req, res) => {
   }
 })
 
+// specific joke comments
+router.get('/:id/comments', async (req, res) => {
+  const { id } = req.params
+  try {
+    const jokes = await Jokes.findComments(id)
+
+    if (jokes.length) {
+      res.json(jokes)
+    } else {
+      res.status(404).json({ message: 'Could not find jokes for given scheme' })
+    }
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to get jokes' })
+  }
+})
+
+
 // GET by ID - /api/jokes/:id
 router.get('/:id', async (req, res) => {
   const { id } = req.params

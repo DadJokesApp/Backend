@@ -18,14 +18,6 @@ function find() {
     .select('c.id', 'c.joke_id', 'c.user_id', 'u.username', 'u.img_url', 'c.comment',)
 }
 
-function findComments(joke_id) {
-  return db('jokes as j')
-    .join('users as u', 'j.user_id', 'u.id')
-    .select('j.id', 'u.username', 'u.img_url', 'j.joke', 'j.punchline')
-    .where({ joke_id })
-
-}
-
 async function add(comment) {
   const [id] = await db('comments').insert(comment)
 
