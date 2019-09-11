@@ -30,7 +30,7 @@ exports.seed = function(knex) {
           joke: `Chances are if you've seen one shopping center...`,
           punchline: `You've seen a mall.`,
           private: false,
-          user_id: 1
+          user_id: 2
         },
       ]);
     });
