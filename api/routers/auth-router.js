@@ -2,7 +2,7 @@
 const router = require('express').Router()
 const session = require('express-session')
 const knexSessionStore = require('connect-session-knex')(session)
-const Users = require('../helpers/helper-model.js')
+const Users = require('../helpers/users-model.js')
 
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -63,7 +63,7 @@ router.post('/register', (req, res) => {
     })
 })
 
-router.post('/login', validate, (req, res) => {
+router.post('/login', (req, res) => {
   let { username, password } = req.headers
 
   req.session.loggedin = false
@@ -112,8 +112,11 @@ router.delete('/logout', (req, res) => {
 // Generate a JSON web token 🌹
 function genToken(user) {
   const payload = {
-    subject: 'user',
-    username: user.username
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    img_url: user.img_url,
+    password: user.password
   }
 
   const secret = process.env.SECRET
@@ -126,25 +129,25 @@ function genToken(user) {
 }
 
 // Validation middleware 🆔
-function validate(req, res, next) {
-  const {username, password} = req.headers
-  if (username && password) {
-    Users.findBy({ username })
-    .first()
-    .then(user => {
-      if (user && bcrypt.compareSync(password, user.password)) {
-        next()
-      } else {
-        res.status(401).json({message: "You shall not pass 🛑"})
-      }
-    })
-    .catch(err => {
-      res.status(500).json({message:"unexpected error 🤷‍"})
-    })
-  } else {
-    res.status(400).json({message:"no credentials provided 🤥"})
-  }
-}
+// function validate(req, res, next) {
+//   const {username, password} = req.headers
+//   if (username && password) {
+//     Users.findBy({ username })
+//     .first()
+//     .then(user => {
+//       if (user && bcrypt.compareSync(password, user.password)) {
+//         next()
+//       } else {
+//         res.status(401).json({message: "You shall not pass 🛑"})
+//       }
+//     })
+//     .catch(err => {
+//       res.status(500).json({message:"unexpected error 🤷‍"})
+//     })
+//   } else {
+//     res.status(400).json({message:"no credentials provided 🤥"})
+//   }
+// }
 
 // Export router 🚀
 module.exports = router

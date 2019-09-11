@@ -4,7 +4,10 @@ exports.up = function(knex) {
     t.text('joke').notNullable();
     t.text('punchline');
     t.boolean('private').defaultTo(true);
-    t.integer('user_id').notNullable().unsigned().references('users.id');
+    t.integer('user_id')
+      .notNullable()
+      .unsigned()
+      .references('users.id');
   })
 
 };
