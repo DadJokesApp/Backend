@@ -15,7 +15,7 @@ function all() {
   return db('jokes as j')
     .join('users as u', 'j.user_id', 'u.id')
     .select('j.id', 'u.username', 'u.img_url', 
-    'j.joke', 'j.punchline', 'j.private', 'j.user_id')
+    'j.joke', 'j.punchline', 'j.private', 'j.revealed', 'j.laughs', 'j.user_id')
 }
 
 function findComments(joke_id) {
