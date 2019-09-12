@@ -78,10 +78,13 @@ router.get('/:id', async (req, res) => {
 // POST /api/jokes/
 router.post('/', async (req, res) => {
   const joke = req.body;
+  console.log(joke);
 
   try {
     if (joke) {
-      const username = req.decodedJwt.username;
+      // const username = req.decodedJwt.username;
+      const username = joke.username;
+
       const [ user ] = await Users.findBy({username});
       joke.user_id = user.id;
 
