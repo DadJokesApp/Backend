@@ -37,7 +37,13 @@ async function public() {
 }
 
 function create(joke) {
-  return db('jokes').insert(joke)
+  return db('jokes')
+    .insert({
+      joke: joke.joke,
+      punchline: joke.punchline,
+      private: joke.private,
+      user_id: joke.user_id
+    })
 }
 
 function remove(id) {
