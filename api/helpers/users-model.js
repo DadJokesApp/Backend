@@ -9,7 +9,9 @@ module.exports = {
   findById,
   findJokes,
   update,
-  remove
+  remove,
+  get,
+  getUserJokes
 }
 
 // Functions ⚙️
@@ -24,7 +26,7 @@ function findBy(filter) {
 function findJokes(user_id) {
   return db('jokes as j')
     .join('users as u', 'j.user_id', 'u.id')
-    .select('j.id', 'u.username', 'u.img_url', 'j.joke', 'j.punchline')
+    .select('j.id', 'u.username', 'u.img_url', 'j.joke', 'j.punchline', 'j.laughs')
     .where({ user_id })
 
 }
@@ -54,4 +56,34 @@ function remove(id) {
   return db('users')
     .where({ id })
     .del()
+}
+
+function get(id) {
+  let query = db('users as u')
+  if (id) {
+    query.where('u.id', id)
+
+    const promises = [query, this.getUserJokes(id)]
+
+    return Promise.all(promises).then(function(results) {
+      let [user, jokes] = results
+
+      if (user) {
+        user.jokes = jokes
+
+        return mappers.userToBody(user)
+      } else {
+        return null
+      }
+    })
+  }
+  return query.then(users => {
+    return users.map(user => mappers.userToBody(user))
+  })
+}
+
+function getUserJokes(userId) {
+  return db('jokes as j')
+    .where('j.user_id', userId)
+    .then(jokes => jokes.map(joke => mappers.jokeToBody(joke)));
 }

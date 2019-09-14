@@ -44,7 +44,7 @@ router.get('/:id', async (req, res) => {
 // POST a new comment to your chosen joke 🚼
 router.post('/', async (req, res) => {
   try {
-    const comment = await Comments.insert(req.body)
+    const comment = await Comments.add(req.body)
     res.status(201).json(comment)
   } catch (error) {
     console.log(error)

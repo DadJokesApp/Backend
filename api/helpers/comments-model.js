@@ -14,7 +14,6 @@ module.exports = {
 function find() {
   return db('comments as c')
     .join('users as u', 'c.user_id', 'u.id')
-    // .join('jokes as j', 'c.joke_id', 'j.id')
     .select('c.id', 'c.joke_id', 'c.user_id', 'u.username', 'u.img_url', 'c.comment',)
 }
 

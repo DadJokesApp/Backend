@@ -76,17 +76,33 @@ router.get('/:id', async (req, res) => {
 })
 
 // POST /api/jokes/
+// router.post('/', async (req, res) => {
+//   const joke = req.body;
+
+//   try {
+//     if (joke) {
+//       const username = req.decodedJwt.username;
+//       const [ user ] = await Users.findBy({username});
+//       joke.user_id = user.id;
+
+//       const [ jokeId ] = await Jokes.create(joke);
+//       res.status(201).json(jokeId);
+//     } else {
+//       res.status(400).json({message: 'Joke required'});
+//     }
+//   } catch (err) {
+//     res.status(500).json({message: 'Error adding joke'});
+//   }
+// });
+
+// POST /api/jokes/
 router.post('/', async (req, res) => {
   const joke = req.body;
-
+  console.log(joke);
   try {
     if (joke) {
-      const username = req.decodedJwt.username;
-      const [ user ] = await Users.findBy({username});
-      joke.user_id = user.id;
-
-      const [ jokeId ] = await Jokes.create(joke);
-      res.status(201).json(jokeId);
+      const joke = await Jokes.create(req.body);
+      res.status(201).json(joke);
     } else {
       res.status(400).json({message: 'Joke required'});
     }
