@@ -8,15 +8,15 @@ exports.seed = function(knex) {
       // Inserts seed entries 🌱
       return knex('users').insert([
         { id: 1,
-          username: 'FireNinja',
-          email: 'mcbride967@gmail.com',
-          img_url: 'http://files.gamebanana.com/img/ico/sprays/narutospray.png',
+          username: 'Stan Smith',
+          email: 'ciaagent@america.com',
+          img_url: 'https://i.imgur.com/iorA2Js.png',
           password: bcrypt.hashSync(process.env.PASSWORD, 10)
         },
         {
           id: 2,
           username: 'Rick Sanchez',
-          email: 'madscientist@gmail.com',
+          email: 'therickestrick@multiverse.com',
           img_url: 'https://static1.squarespace.com/static/528252b7e4b00150d03a4848/59a2354eebbd1a0623e0cefe/59a2359f6a49631dd5192339/1503802789674/RickAndMorty_RickHappy1500.png?format=300w',
           password: bcrypt.hashSync(process.env.PASSWORD, 10)
         },
@@ -30,7 +30,7 @@ exports.seed = function(knex) {
         {
           id: 4,
           username: 'Bob Belcher',
-          email: 'bobsburgers@gmail.com',
+          email: 'info@bobsburgers.com',
           img_url: 'http://fs.delphiforums.net/bobsburgers/images/bob_linda.png',
           password: bcrypt.hashSync(process.env.PASSWORD, 10)
         },
