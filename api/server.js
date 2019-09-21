@@ -25,7 +25,7 @@ server.use(helmet())
 
 // Root GET 🌳
 server.get('/', (req, res) => {
-  res.send('Welcome to the DadJokes database! 🔥')
+  res.send('Welcome to the DadJokes database!!! 🔥')
 })
 
 // Export server 🚀
